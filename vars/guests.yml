@@ -1,0 +1,50 @@
+---
+guests:
+    - name: org.freeipa.test_ipa1
+      url: http://fedora.osuosl.org/linux/releases/25/Server/x86_64/os/
+      cpu: 2
+      mem: 2048
+      virt_type: kvm
+      virt_hypervisor: hvm
+      os:
+          type: linux
+          variant: fedora25
+      disk:
+          size: 10
+          path: /var/lib/libvirt/images2
+      net:
+          ip: 192.168.122.101
+          gateway: 192.168.122.1
+          name: ipa1.ipa.test
+    - name: org.freeipa.test_ipa2
+      url: http://fedora.osuosl.org/linux/releases/25/Server/x86_64/os/
+      cpu: 2
+      mem: 2048
+      virt_type: kvm
+      virt_hypervisor: hvm
+      os:
+          type: linux
+          variant: fedora25
+      disk:
+          size: 10
+          path: /var/lib/libvirt/images2
+      net:
+          ip: 192.168.122.102
+          gateway: 192.168.122.1
+          name: ipa2.ipa.test
+    - name: org.freeipa.test_ipa3
+      url: http://fedora.osuosl.org/linux/releases/25/Server/x86_64/os/
+      cpu: 2
+      mem: 2048
+      virt_type: kvm
+      virt_hypervisor: hvm
+      os:
+          type: linux
+          variant: fedora25
+      disk:
+          size: 10
+          path: /var/lib/libvirt/images2
+      net:
+          ip: 192.168.122.103
+          gateway: 192.168.122.1
+          name: ipa3.ipa.test
