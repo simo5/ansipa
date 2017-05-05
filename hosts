@@ -1,5 +1,5 @@
-localhost ansible_connection=local
+localhost # ansible_connection=local
 ipa1 ansible_host=192.168.122.101
 ipa2 ansible_host=192.168.122.102
 ipa3 ansible_host=192.168.122.103
-dc1 ansible_host=192.168.122.111
+# dc1 ansible_host=192.168.122.111
