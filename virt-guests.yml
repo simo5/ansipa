@@ -1,5 +1,5 @@
 ---
-- name: manage libvirt guests
+- name: create libvirt guests
   hosts: localhost
   user: root
 
@@ -18,6 +18,12 @@
       - name: get list of vms
         virt: command=list_vms
         register: vms_info
+
+      - name: copy kickstart
+        copy:
+          src: '{{item.kickstart}}'
+          dest: '{{basepath}}/{{item.kickstart}}'
+        with_items: "{{baseimgs}}"
 
       - name: create base VM if none available
         command: virt-install -n {{item.name}}
