@@ -1,10 +1,14 @@
 ---
 basepath: /home/simo/tmp/guests
 domain: ipa.test
+realm: IPA.TEST
+dm_pw: freeipa6
+admin_pw: freeipa7
+forwarder: 192.168.122.1
 
 guests:
-    - name: test_ipa1
-      hostname: ipa1
+  ipa1:
+      img_name: test_ipa1
       baseimg: test_base.img
       cpu: 2
       mem: 2048
@@ -13,8 +17,9 @@ guests:
       os:
           type: linux
           variant: fedora25
-    - name: test_ipa2
-      hostname: ipa2
+      master: ipa1
+  ipa2:
+      img_name: test_ipa2
       baseimg: test_base.img
       cpu: 2
       mem: 2048
@@ -23,8 +28,9 @@ guests:
       os:
           type: linux
           variant: fedora25
-    - name: test_ipa3
-      hostname: ipa3
+      master: ipa1
+  ipa3:
+      img_name: test_ipa3
       baseimg: test_base.img
       cpu: 2
       mem: 2048
@@ -33,10 +39,10 @@ guests:
       os:
           type: linux
           variant: fedora25
+      master: ipa1
 
-baseimgs:
+baseimg:
     - name: test_base
-      hostname: base
       iso: Fedora-Server-netinst-x86_64-25-1.3.iso
       kickstart: f25-ks.cfg
       cpu: 2
