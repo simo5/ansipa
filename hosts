@@ -1,5 +1,11 @@
 localhost # ansible_connection=local
-ipa1 ansible_host=192.168.122.101
-ipa2 ansible_host=192.168.122.102
-ipa3 ansible_host=192.168.122.103
+# The real host ip address will be source in the plays
+# ipa1 ansible_host=192.168.122.255
+# ipa2 ansible_host=192.168.122.255
+# ipa3 ansible_host=192.168.122.255
 # dc1 ansible_host=192.168.122.111
+
+[test_hosts]
+
+[test_hosts:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
