@@ -1,38 +1,20 @@
-Role Name
-=========
+This is my first attempt at using Ansible, so it may not be the most polished
+example to follow, that said.
 
-A brief description of the role goes here.
+The goal is to allow me to easily test more complex FreeIPA setups for basic
+smoke testing.
 
-Requirements
-------------
+This script requires local root access via ssh keys atm, this is used to deal
+with libvirt atm.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+The script variables are all in vars/guests.yml and they define the number of
+hosts to create and their relationship to each other.
 
-Role Variables
---------------
+To run the script simply run ansible-playbook virt-guests.yml
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Each time you run it, by default the actual guests are blown away and they are
+recreated from a shared base disk which is crate the first time from scratch
+using a fedora 25 dvd and a kickstart file.
 
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+If you are testing stuff and do not want to blow away and recreate the VMs add
+a --skip-tags=destroy to your ansible command.
