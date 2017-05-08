@@ -1,9 +1,4 @@
-localhost # ansible_connection=local
-# The real host ip address will be source in the plays
-# ipa1 ansible_host=192.168.122.255
-# ipa2 ansible_host=192.168.122.255
-# ipa3 ansible_host=192.168.122.255
-# dc1 ansible_host=192.168.122.111
+localhost
 
 [test_hosts]
 
