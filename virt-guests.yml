@@ -88,7 +88,7 @@
        yum_repository:
          name: copr_freeipa_master_dependencies
          description: Copr repo for freeipa-master owned by @freeipa
-         baseurl: https://copr-be.cloud.fedoraproject.org/results/@freeipa/freeipa-master/fedora-$releasever-$basearch/
+         baseurl: "{{deprepo}}"
          gpgcheck: no
          enabled: yes
 
@@ -96,7 +96,7 @@
        yum_repository:
          name: copr_freeipa_master_nightly
          description: Copr repo for freeipa-master owned by @freeipa
-         baseurl: https://copr-be.cloud.fedoraproject.org/results/@freeipa/freeipa-master-nightly/fedora-$releasever-$basearch/
+         baseurl: "{{iparepo}}"
          gpgcheck: no
          enabled: yes
 

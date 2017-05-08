@@ -5,6 +5,8 @@ realm: IPA.TEST
 dm_pw: freeipa6
 admin_pw: freeipa7
 forwarder: 192.168.122.1
+deprepo: https://copr-be.cloud.fedoraproject.org/results/@freeipa/freeipa-master/fedora-$releasever-$basearch/
+iparepo: https://copr-be.cloud.fedoraproject.org/results/@freeipa/freeipa-master-nightly/fedora-$releasever-$basearch/
 
 guests:
   ipa1:
