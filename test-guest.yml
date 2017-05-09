@@ -19,7 +19,7 @@
            --vcpus {{vm.cpu}}
            --os-type {{vm.os.type}}
            --os-variant {{vm.os.variant}}
-           --network network=default
+           --network network={{netname}}
            --graphics spice
            --{{vm.virt_hypervisor}}
            --virt-type {{vm.virt_type}}

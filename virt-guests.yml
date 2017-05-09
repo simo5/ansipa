@@ -32,7 +32,7 @@
                  --location {{basepath}}/{{item.iso}}
                  --os-type {{item.os.type}}
                  --os-variant {{item.os.variant}}
-                 --network network=default
+                 --network network={{netname}}
                  --initrd-inject {{basepath}}/{{item.kickstart}}
                  --extra-args="inst.ks=file:/{{item.kickstart}} inst.text"
                  --graphics spice
