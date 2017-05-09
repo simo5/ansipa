@@ -55,7 +55,7 @@
 
       - include: test-guest.yml vm={{guests[item]}}
         with_items: "{{guests}}"
-        tags: destroy
+        tags: destructive
 
       - name: source new inventry
         script: virt-inventory.py  --list
