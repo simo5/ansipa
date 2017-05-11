@@ -1,0 +1,16 @@
+---
+- name: source new inventry
+  script: virt-inventory.py  --list
+  register: virt_inv
+
+- name: register the output as json
+  set_fact:
+    vm_inv={{virt_inv.stdout|from_json}}
+
+- name: add hosts in test_hosts group
+  add_host:
+    hostname: "{{item}}"
+    ansible_host: '{{vm_inv["_meta"]["hostvars"][guests[item].img_name]["ansible_host"]}}'
+    groups: test_hosts
+  with_items: "{{guests}}"
+

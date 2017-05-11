@@ -1,0 +1,39 @@
+---
+- name: get list of vms
+  virt: command=list_vms
+  register: vms_info
+
+- name: copy kickstart
+  copy:
+    src: '{{item.kickstart}}'
+    dest: '{{basepath}}/{{item.kickstart}}'
+  with_items: "{{baseimg}}"
+
+- name: create base VM if none available
+  command: virt-install --connect {{virsh_uri}}
+           -n {{item.name}}
+           -r {{item.mem}}
+           --vcpus {{item.cpu}}
+           --location {{os_location}}
+           --os-type {{item.os.type}}
+           --os-variant {{item.os.variant}}
+           --network network={{netname}}
+           --initrd-inject {{basepath}}/{{item.kickstart}}
+           --extra-args="inst.ks=file:/{{item.kickstart}} inst.text"
+           --graphics spice
+           --{{item.virt_hypervisor}}
+           --virt-type {{item.virt_type}}
+           --disk size={{disksize}},path={{basepath}}/{{item.name}}.img
+           --noautoconsole
+           --noreboot
+           --wait -1
+  when: item.name not in vms_info.list_vms
+  with_items: "{{baseimg}}"
+
+- name: get guest info
+  virt: command=info
+  register: virt_info
+
+- name: make sure the base vm is not running
+  virt: name={{item.name}} state=shutdown
+  with_items: "{{baseimg}}"

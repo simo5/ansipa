@@ -4,17 +4,24 @@
 #   A list of vms_info is passed in the 'vms_info' var
 
 - name: destroy the VM if it already exists
-  command: virsh destroy {{vm.img_name}}
+  command: virsh -c {{virsh_uri}} destroy {{vm.img_name}}
   when: vm.img_name in vms_info.list_vms
 
+- name: check if we have old storage
+  command: virsh -c {{virsh_uri}} vol-info --pool {{virsh_vol}} {{vm.img_name}}.img
+  register: result
+  ignore_errors: True
+
 - name: destroy the VM storage if any
-  file: path={{basepath}}/{{vm.img_name}}.img state=absent
+  command: virsh -c {{virsh_uri}} vol-delete --pool {{virsh_vol}} {{vm.img_name}}.img
+  when: result|succeeded
 
 - name: (re)create the VM storage
-  command: qemu-img create -f qcow2 -o backing_file={{basepath}}/{{vm.baseimg}},backing_fmt=qcow2 {{basepath}}/{{vm.img_name}}.img
+  command: virsh -c {{virsh_uri}} vol-create-as {{virsh_vol}} {{vm.img_name}}.img {{disksize}}G --backing-vol {{vm.baseimg}} --backing-vol-format qcow2 --format qcow2
 
 - name: create the VM
-  command: virt-install -n {{vm.img_name}}
+  command: virt-install --connect {{virsh_uri}}
+           -n {{vm.img_name}}
            -r {{vm.mem}}
            --vcpus {{vm.cpu}}
            --os-type {{vm.os.type}}
@@ -36,7 +43,7 @@
   retries: 20
   delay: 10
 
-- name: regiester the output as json
+- name: register the output as json
   set_fact:
     vm_inv={{virt_inv.stdout|from_json}}
 

@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
     libvirt.registerErrorHandler(f=ignore, ctx=None)
 
-    conn = libvirt.open()
+    conn = libvirt.open('qemu:///system')
     if conn is None:
         print('Failed to connect to hypervisor')
         sys.exit(1)

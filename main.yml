@@ -1,0 +1,30 @@
+---
+- name: Test FreeIPA
+  hosts: localhost
+  user: root
+
+  vars_files:
+      - vars/main.yml
+
+  tasks:
+
+    - name: setup VMs
+      include: vm-base-setup.yml
+
+    - name: Create IPA VMs
+      include: vm-create-hosts.yml vm={{guests[item]}}
+      with_items: "{{guests}}"
+      tags: destructive
+
+    - name: register new hosts
+      include: vm-source-hosts.yml
+
+- name: install FreeIPA on hosts
+  hosts: test_hosts
+  user: root
+
+  vars_files:
+      - vars/main.yml
+
+  tasks:
+     - include: ipa-setup.yml
