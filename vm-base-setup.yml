@@ -1,4 +1,31 @@
 ---
+- debug:
+    var: fromscratch
+
+- name: kill all VMs if fromscratch is defined
+  command: virsh -c {{virsh_uri}} destroy {{guests[item].img_name}}
+  with_items: "{{guests}}"
+  ignore_errors: True
+  when: fromscratch
+
+- name: kill base image if fromscratch is defined
+  command: virsh -c {{virsh_uri}} destroy {{item.name}}
+  with_items: "{{baseimg}}"
+  ignore_errors: True
+  when: fromscratch
+
+- name: remoe base image if fromscratch is defined
+  command: virsh -c {{virsh_uri}} undefine {{item.name}}
+  with_items: "{{baseimg}}"
+  ignore_errors: True
+  when: fromscratch
+
+- name: destroy the base storage if any
+  command: virsh -c {{virsh_uri}} vol-delete --pool {{virsh_vol}} {{item.name}}.img
+  with_items: "{{baseimg}}"
+  ignore_errors: True
+  when: fromscratch
+
 - name: get list of vms
   virt: command=list_vms
   register: vms_info
