@@ -60,3 +60,7 @@ baseimg:
       os:
           type: linux
           variant: fedora25
+
+ipapkgs:
+    - name: freeipa-server
+    - name: python2-custodia

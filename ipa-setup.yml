@@ -18,10 +18,11 @@
     gpgcheck: no
     enabled: yes
 
-- name: Update freeipa-server packages
+- name: Update or install required packages
   dnf:
-    name: freeipa-server
+    name: "{{item.name}}"
     state: latest
+  with_items: "{{ipapkgs}}"
 
 - name: Check if FreeIPA is configured already
   stat:
