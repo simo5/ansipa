@@ -1,6 +1,12 @@
 ---
-- debug:
-    var: fromscratch
+- name: check for pool
+  command: virsh -c {{virsh_uri}} pool-info {{virsh_vol}}
+  register: pool_exists
+  ignore_errors: True
+
+- name: if no storage pool exists, start from scrath
+  command: virsh -c {{virsh_uri}} pool-create-as {{virsh_vol}} dir --target {{basepath}}
+  when: pool_exists | failed
 
 - name: kill all VMs if fromscratch is defined
   command: virsh -c {{virsh_uri}} destroy {{guests[item].img_name}}
